@@ -1,0 +1,357 @@
+<!-- Link to bootstrap css library version 4 -->
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+<!-- jQuery -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"
+></script>
+<!-- Bootstrap js -->
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>
+
+<style>
+  .container {
+    margin-top: 30px;
+  }
+  .tab-pane {
+    padding: 15px 15px 0 0;
+  }
+  .card {
+    margin-bottom: 10px;
+  }
+  .logout {
+    margin-bottom: 8px;
+    margin-left:auto;
+  }
+</style>
+
+<div class="container">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a
+        class="nav-item nav-link active"
+        id="nav-home-tab"
+        data-toggle="tab"
+        href="#nav-home"
+        role="tab"
+        aria-controls="nav-home"
+        aria-selected="true"
+        >Exercises et Testes</a
+      >
+      <a
+        class="nav-item nav-link"
+        id="nav-profile-tab"
+        data-toggle="tab"
+        href="#nav-profile"
+        role="tab"
+        aria-controls="nav-profile"
+        aria-selected="false"
+        >Profile</a
+      >
+      <a
+        class="nav-item nav-link"
+        id="nav-tea-tab"
+        data-toggle="tab"
+        href="#nav-tea"
+        role="tab"
+        aria-controls="nav-tea"
+        aria-selected="false"
+        >Lists informations</a
+      >
+      <a
+        class="nav-item nav-link"
+        id="nav-contact-tab"
+        data-toggle="tab"
+        href="#nav-contact"
+        role="tab"
+        aria-controls="nav-contact"
+        aria-selected="false"
+        >Messages (3)</a
+      >
+      <a href="/logout" class="logout btn btn-primary" id="logout">se déconnecter</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="nav-home"
+      role="tabpanel"
+      aria-labelledby="nav-home-tab"
+    >
+    <h2 class="bg-info text-white text-center p-2">
+      To Do
+    </h2>
+    <hr>
+    {% for exercise_list in exercises_list %}
+      {% if exercise_list.id not in done_exercises_list_ids %}
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">{{exercise_list.name}}</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"> List of exercises «{{exercise_list.name}}»  by {{exercise_list.author.first_name}} {{exercise_list.author.last_name}}</h5>
+          <p class="card-text">
+            Created : {{exercise_list.date}} 
+          </p>
+          <p class="card-title">
+            Difficulty : easy
+          </p>
+          <a href="/exercise/{{exercise_list.id}}" class="btn btn-primary">Go to answer</a>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+    <h2 class="bg-info text-white text-center p-2">
+      Do
+    </h2>
+    <hr>
+    {% for exercise_list in done_exercises_list %}
+      <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">{{exercise_list.exercise_list.name}}</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Good joob, you have already answered of this list</h5>
+          <p class="card-text">
+            Answered : June 24, 2019
+          </p>
+          <a href="/exercise/{{exercise_list.exercise_list.id}}" class="btn btn-success">Practice a gain !</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+    <div
+      class="tab-pane fade"
+      id="nav-profile"
+      role="tabpanel"
+      aria-labelledby="nav-profile-tab"
+    >
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+          <div class="text-center">
+            <img
+              src="//placehold.it/100"
+              class="avatar img-circle"
+              alt="avatar"
+            />
+            <h6>Upload a different photo...</h6>
+
+            <input type="file" class="form-control" />
+          </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+          <div class="alert alert-info alert-dismissable">
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <i class="fa fa-coffee"></i>
+            This is an <strong>.alert</strong>. Use this to show important
+            messages to the user.
+          </div>
+          <h3>Personal info</h3>
+
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label class="col-lg-3 control-label">First name:</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" value="{{student.first_name}}" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Last name:</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" value="{{student.last_name}}" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Email:</label>
+              <div class="col-lg-8">
+                <input
+                  class="form-control"
+                  type="text"
+                  value="{{student.email}}"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Password:</label>
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  type="password"
+                  value="{{student.code}}"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Confirm password:</label>
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  type="password"
+                  value="{{student.code}}"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label"></label>
+              <div class="col-md-8">
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="Sauvgarder"
+                />
+                <span></span>
+                <input type="reset" class="btn btn-default" value="Annuler" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div
+    class="tab-pane fade"
+    id="nav-tea"
+    role="tabpanel"
+    aria-labelledby="nav-tea-tab"
+  >
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Number List</th>
+          <th scope="col">First_name</th>
+          <th scope="col">Last_name</th>
+          <th scope="col">E_mail</th>
+          <th scope="col">experience</th>
+          <th scope="col">specilization</th>
+          <th scope="col">Cours</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ex in exercises_list %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ex.author.first_name}}</td>
+          <td>{{ex.author.last_name}}</td>
+          <td>{{ex.author.email}}</td>
+          <td>{{ex.author.experience}}</td>
+          <td>{{ex.author.specilization}}</td>
+          <td>{{ex.author.course.name}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+    <div
+      class="tab-pane fade"
+      id="nav-contact"
+      role="tabpanel"
+      aria-labelledby="nav-contact-tab"
+    >
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                Administreur(1)
+              </button>
+            </h2>
+          </div>
+
+          <div
+            id="collapseOne"
+            class="collapse show"
+            aria-labelledby="headingOne"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body">
+              Bienvenue à SmartClassroom :)
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link collapsed"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseTwo"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                Guido van Rossum(1)
+              </button>
+            </h2>
+          </div>
+          <div
+            id="collapseTwo"
+            class="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body">
+                <h5>A propos de "Python"</h5>
+                Python est un langage de programmation. 
+                Créé par Guido van Rossum .Cest un langage puissant, à la fois facile à apprendre et riche en possibilités. Dès l'instant où vous l'installez sur votre ordinateur, vous disposez de nombreuses fonctionnalités intégrées au langage que nous allons découvrir tout au long de ce livre.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link collapsed"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseThree"
+                aria-expanded="false"
+                aria-controls="collapseThree"
+              >
+                Guido van Rossum(2)
+              </button>
+            </h2>
+          </div>
+          <div
+            id="collapseThree"
+            class="collapse"
+            aria-labelledby="headingThree"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body">
+                <h5>Que sont les opérateurs en python?</h5>
+                Les opérateurs sont des symboles spéciaux en Python qui effectuent des calculs arithmétiques ou logiques. La valeur sur laquelle l'opérateur opère s'appelle l'opérande.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#nav-tab a").on("click", function(e) {
+    if ($(this).attr('id') !== 'logout') {
+      e.preventDefault();
+      $(this).tab("show");
+    }
+  });
+</script>

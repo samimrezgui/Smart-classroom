@@ -1,0 +1,452 @@
+<!-- Link to bootstrap css library version 4 -->
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+<!-- jQuery -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"
+></script>
+<!-- Bootstrap js -->
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>
+
+<style>
+  .container {
+    margin-top: 30px;
+  }
+
+  .tab-pane {
+    padding: 15px 15px 0 0;
+  }
+
+  .card {
+    margin-bottom: 10px;
+  }
+
+  .logout {
+    margin-bottom: 8px;
+    margin-left:auto;
+  }
+  h1{
+    text-align: center;
+  }
+</style>
+
+<div class="container">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a
+        class="nav-item nav-link active"
+        id="nav-home-tab"
+        data-toggle="tab"
+        href="#nav-home"
+        role="tab"
+        aria-controls="nav-home"
+        aria-selected="true"
+        >Cours informations</a
+      >
+      <a
+        class="nav-item nav-link"
+        id="nav-home-tab"
+        data-toggle="tab"
+        href="#nav-gen-exercises"
+        role="tab"
+        aria-controls="nav-gen-exercises"
+        aria-selected="false"
+        >Générer des exercises</a
+      >
+      <a
+        class="nav-item nav-link"
+        id="nav-profile-tab"
+        data-toggle="tab"
+        href="#nav-profile"
+        role="tab"
+        aria-controls="nav-profile"
+        aria-selected="false"
+        >Profile</a
+      >
+      <a
+        class="nav-item nav-link"
+        id="nav-contact-tab"
+        data-toggle="tab"
+        href="#nav-contact"
+        role="tab"
+        aria-controls="nav-contact"
+        aria-selected="false"
+        >Messages (3)</a
+      >
+      <a href="/logout" class="logout btn btn-dark" id="logout">se déconnecter</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="nav-home"
+      role="tabpanel"
+      aria-labelledby="nav-home-tab"
+      >
+      <h1 class="bg-dark text-white text-center p-2">
+          Cours
+        </h1>
+    <div class="card">
+      <div class="card-header">
+          Course: {{ teacher.course.name }}
+      </div>
+    </div>
+    <table class="table table-hover">
+        <tbody>
+          <tr>
+              <td>Description</td>
+              <td>{{ teacher.course.description}}</td>
+          </tr>
+          <tr>
+            <td>Objectives</td>
+            <td>{{ teacher.course.objectives }}</td>
+          </tr>
+          <tr>
+            <td>Room</td>
+            <td>{{ teacher.course.room }}</td>
+          </tr>
+          <tr>
+            <td>Début du cours</td>
+            <td>{{ teacher.course.start_time }}</td>
+          </tr>
+          <tr>
+            <td>Fin du cours</td>
+            <td>{{ teacher.course.end_time }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+      <h1 class="bg-dark text-white text-center p-2">
+          Testes
+      </h1>
+      <table class="table table-hover">
+          <tbody>
+              <div class="card">
+                  <div class="card text-center">
+                      <div class="card-header">
+                          Tout savoir sur les Tests
+                      </div>
+                      <div class="card-body">
+                        <a href="#" class="btn btn-primary">Voir le test</a>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                  </div>
+          </tbody>
+        </table>
+    </div>
+    <!--Les tests-->
+  
+    <div
+      class="tab-pane fade show"
+      id="nav-gen-exercises"
+      role="tabpanel"
+      aria-labelledby="nav-gen-exercises-tab"
+    >
+    <form id="exercise-config-form" action="/generated" method="POST">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Type</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="assignment_type">
+                  <option value="test">Test</option>
+                  <option value='exercise_list'>Liste d'exercise</option>
+                  <option value="practice">Pratique</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Nom</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Nombre d'exercise</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="num-exercise" name="num-exercise">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                    </select>
+            </div>
+        </div>
+      <div id="exercise-list">
+        <div id="one-exercise-config" class="form-group row">
+              <div class="col-sm-2">
+                  <label for="">Exercise <span class="ex-num"> 1 </span> </label>
+              </div>
+              <div class="col-sm-3">
+                  <label for="">sujet</label>
+                  <select class="form-control" name="topic">
+                      <option value="loops">Python arithmetic operators</option>
+                      <option value="functions">Functions</option>
+                      <option value="data_structure">Data structure</option>
+                      <option value="data_structure">Loops</option>
+                  </select>
+              </div>
+              <div class="col-sm-3">
+                  <label for="">type</label>
+                  <select class="form-control" name="type">
+                      <option value="question_answer">
+                        question reponse unique
+                      </option>
+                      <option value="question_open_ended">
+                        question reponse divers
+                      </option>
+                      <option value="question_mult_answer">
+                        question multiple
+                      </option>
+                  </select>
+              </div>
+              <div class="col-sm-2">
+                  <label for="">coefficient</label>
+                  <select class="form-control" name="coefficient">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                  </select>
+              </div>
+              <div class="col-sm-2">
+                  <label for="">difficulté</label>
+                  <select class="form-control" name="difficulty">
+                      <option value="easy">esay</option>
+                      <option value="medium">medium</option>
+                      <option value="hard">hard</option>
+                  </select>
+              </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline-primary">Generer</button>
+    </div>
+    <div
+      class="tab-pane fade"
+      id="nav-profile"
+      role="tabpanel"
+      aria-labelledby="nav-profile-tab"
+    >
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+          <div class="text-center">
+            <img
+              src="//placehold.it/100"
+              class="avatar img-circle"
+              alt="avatar"
+            />
+            <h6>Upload a different photo...</h6>
+
+            <input type="file" class="form-control" />
+          </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+          <div class="alert alert-info alert-dismissable">
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <i class="fa fa-coffee"></i>
+            This is an <strong>.alert</strong>. Use this to show important
+            messages to the user.
+          </div>
+          <h3>Personal info</h3>
+
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label class="col-lg-3 control-label">First name:</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" value="{{teacher.first_name}}"/>
+                
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Last name:</label>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" value="{{teacher.last_name}}" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">Email:</label>
+              <div class="col-lg-8">
+                <input
+                  class="form-control"
+                  type="text"
+                  value="{{teacher.email}}"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Password:</label>
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  type="password"
+                  value="{{teacher.code}}"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Confirm password:</label>
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  type="password"
+                  value="{{teacher.code}}"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label"></label>
+              <div class="col-md-8">
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="Sauvgarder"
+                />
+                <span></span>
+                <input type="reset" class="btn btn-default" value="Annuler" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tab-pane fade"
+      id="nav-contact"
+      role="tabpanel"
+      aria-labelledby="nav-contact-tab"
+    >
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                Administreur
+              </button>
+            </h2>
+          </div>
+
+          <div
+            id="collapseOne"
+            class="collapse show"
+            aria-labelledby="headingOne"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body">
+              Bienvenue à SmartClassroom :)
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link collapsed"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseTwo"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                Guido van Rossum(1)
+              </button>
+            </h2>
+          </div>
+          <div
+            id="collapseTwo"
+            class="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body">
+                <h5>A propos de "Python"</h5>
+                Python est un langage de programmation. 
+                Créé par Guido van Rossum .Cest un langage puissant, à la fois facile à apprendre et riche en possibilités. Dès l'instant où vous l'installez sur votre ordinateur, vous disposez de nombreuses fonctionnalités intégrées au langage que nous allons découvrir tout au long de ce livre.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link collapsed"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseThree"
+                aria-expanded="false"
+                aria-controls="collapseThree"
+              >
+                Guido van Rossum(2)
+              </button>
+            </h2>
+          </div>
+          <div
+            id="collapseThree"
+            class="collapse"
+            aria-labelledby="headingThree"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body">
+                <h5>Que sont les opérateurs en python?</h5>
+                Les opérateurs sont des symboles spéciaux en Python qui effectuent des calculs arithmétiques ou logiques. La valeur sur laquelle l'opérateur opère s'appelle l'opérande.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#nav-tab a").on("click", function(e) {
+    if ($(this).attr('id') !== 'logout') {
+      e.preventDefault();
+      $(this).tab("show");
+    }
+  });
+
+  $("#num-exercise").on("change", function(e) {
+    const num_exercise = e.target.value;
+
+    $(".one-exercise").remove();
+
+    for (var i = 0; i < num_exercise - 1; i++) {
+      $("#one-exercise-config")
+        .clone()
+        .attr('id', 'one-exercise-config-' + i)
+        .attr('class', 'form-group row one-exercise')
+        .find('span.ex-num').text(' ' + (i + 2) + ' ')
+        .end()
+        .appendTo('#exercise-list');
+    }
+  });
+</script>

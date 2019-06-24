@@ -1,0 +1,42 @@
+
+
+
+<!-- Link to bootstrap css library version 4 -->
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>
+<br>
+<br>
+<br>
+<table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID_Teacher</th>
+            <th scope="col">First_name</th>
+            <th scope="col">Last_name</th>
+            <th scope="col">E_mail</th>
+            <th scope="col">experience</th>
+            <th scope="col">specilization</th>
+            <th scope="col">Cours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>{{teacher.first_name}}</td>
+            <td>{{teacher.last_name}}</td>
+            <td>{{teacher.email}}</td>
+            <td>{{teacher.experience}}</td>
+            <td>{{teacher.specilization}}</td>
+            <td>{{teacher.course.name}}</td>
+          </tr>
+        </tbody>
+      </table>

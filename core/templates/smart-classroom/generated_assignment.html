@@ -1,0 +1,68 @@
+<!-- Link to bootstrap css library version 4 -->
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+<!-- jQuery -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"
+></script>
+<!-- Bootstrap js -->
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>
+
+<div class="container">
+  <h1>
+      {{name}}
+  </h1>
+  <hr>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">course</th>
+        <th scope="col">Topic</th>
+        <th scope="col">Type</th>
+        <th scope="col">Text</th>
+        <th scope="col">Code</th>
+        <th scope="col">Réponse</th>
+        <th scope="col">Coéfficient</th>
+        <th scope="col">Difficulté</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for ex in exercises %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ ex.author.course }}</td>
+          <td>{{ ex.topic.name }}</td>
+          <td>Question réponse</td>
+          <td>{{ ex.text }}</td>
+          <td>{{ ex.code_snippet }}</td>
+          <td>{{ ex.answer }}</td>
+          <td>1</td>
+          <td>easy</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  
+  <form action="/generated" method="POST">
+    {% csrf_token %}
+    {% for id in ids %}
+      <input type="hidden" name="ids" value="{{id}}">
+    {% endfor %}
+    <input type="hidden" name="__action" value="save">
+    <button type="submit" class="btn btn-outline-primary">
+      Sauvgarder
+    </button>
+  </form>
+
+</div>
